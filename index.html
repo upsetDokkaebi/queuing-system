@@ -1,1 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Lineflow queue operations dashboard">
+	<title>Lineflow | Queue Operations</title>
+	<link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+	<section class="login-screen" id="loginScreen">
+		<div class="login-panel">
+			<div class="login-brand">
+				<span class="brand-mark">↗</span>
+				<div>
+					<strong>lineflow</strong>
+					<span>Northstar Clinic</span>
+				</div>
+			</div>
 
+			<div class="login-heading">
+				<div class="eyebrow">Queue operations</div>
+				<h1>Sign in to your desk.</h1>
+				<p>Sign in with your admin account, then choose any available service window.</p>
+			</div>
+
+			<form class="login-form" id="loginForm">
+				<label for="accountEmail">
+					Account email
+					<input id="accountEmail" name="email" type="email" autocomplete="username" placeholder="admin01@northstar.ph" required>
+				</label>
+
+				<label for="accountPassword">
+					Password
+					<input id="accountPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+				</label>
+
+				<label for="loginWindow">
+					Choose service window
+					<select id="loginWindow" name="window" required>
+						<option value="">Select a window</option>
+						<option value="1">Window 01</option>
+						<option value="2">Window 02</option>
+						<option value="3">Window 03</option>
+						<option value="4">Window 04</option>
+					</select>
+				</label>
+
+				<p class="login-error" id="loginError" role="alert"></p>
+				<button class="primary-btn login-button" type="submit">Open dashboard</button>
+			</form>
+
+			<p class="login-help">
+				All administrator accounts may choose any Window 01–04 for their session.<br>
+				<a href="register.html">Register as a visitor</a>
+			</p>
+		</div>
+	</section>
+
+	<div class="app-shell" id="dashboard" hidden>
+		<main class="main">
+			<header class="topbar">
+				<div>
+					<div class="eyebrow" id="dashboardDate">Sunday, September 13, 2026</div>
+					<h1 id="dashboardGreeting">Good morning.</h1>
+					<p class="subtitle">Here is what is happening across your service queue.</p>
+				</div>
+
+				<div class="top-actions">
+					<div class="account-chip">
+						<span class="account-avatar" id="accountAvatar">MS</span>
+						<span id="accountWindow">Window 01</span>
+					</div>
+					<div class="sync-state">
+						<span class="sync-dot" id="syncDot"></span>
+						<span id="syncLabel">Live · just now</span>
+					</div>
+					<button class="outline-btn theme-toggle" id="themeToggle" type="button" aria-pressed="false">
+						<span id="themeIcon">☾</span>
+						<span id="themeLabel">Dark mode</span>
+					</button>
+					<button class="outline-btn" id="logoutBtn" type="button">Sign out</button>
+				</div>
+			</header>
+
+			<section class="overview" aria-label="Queue overview">
+				<article class="stat accent">
+					<div class="stat-label">Waiting now</div>
+					<div class="stat-value" id="waitingCount">08</div>
+					<div class="stat-trend">↓ 12% vs last hour</div>
+				</article>
+
+				<article class="stat">
+					<div class="stat-label">Average wait</div>
+					<div class="stat-value">11<span style="font-size: 16px">m</span></div>
+					<div class="stat-trend">↓ 2m today</div>
+				</article>
+
+				<article class="stat">
+					<div class="stat-label">Served today</div>
+					<div class="stat-value" id="servedCount">42</div>
+					<div class="stat-trend">↑ 8% vs yesterday</div>
+				</article>
+
+				<article class="stat">
+					<div class="stat-label">Service level</div>
+					<div class="stat-value">94<span style="font-size: 16px">%</span></div>
+					<div class="stat-trend">On target</div>
+				</article>
+			</section>
+
+			<div class="content-grid">
+				<section class="panel">
+					<div class="panel-header">
+						<div>
+							<h2>Active queue</h2>
+							<span class="panel-meta" id="queueMeta">8 visitors waiting</span>
+						</div>
+						<button class="danger-btn" id="resetBtn" type="button">Reset queue</button>
+					</div>
+
+					<div class="queue-wrap">
+						<table>
+							<thead>
+								<tr>
+									<th>Ticket</th>
+									<th>Visitor</th>
+									<th>Service</th>
+									<th>Wait time</th>
+									<th>Status</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody id="queueBody"></tbody>
+						</table>
+
+						<div class="empty" id="emptyState" hidden>
+							No visitors waiting. Your queue is clear.
+						</div>
+					</div>
+				</section>
+
+				<div class="side-stack">
+					<section class="panel now-serving">
+						<div class="eyebrow">Now serving</div>
+						<div class="serving-number" id="servingNumber">A-000</div>
+						<div class="serving-name" id="servingName">Elena Rodriguez</div>
+						<div class="serving-counter">
+							Counter 02
+							<span style="float: right">● In service</span>
+						</div>
+					</section>
+
+					<section class="panel controls">
+						<div class="panel-header" style="padding: 0 0 10px; border: 0">
+							<h2>Queue controls</h2>
+							<span class="eyebrow">Live</span>
+						</div>
+
+						<div class="control-row">
+							<div class="control-label">
+								Next visitor
+								<span class="control-detail">Call the next ticket in line</span>
+							</div>
+							<button class="primary-btn" id="nextBtn">Call next</button>
+						</div>
+
+						<div class="control-row">
+							<div class="control-label">
+								Window status
+								<span class="control-detail">Shown on the public display</span>
+							</div>
+							<select id="statusSelect">
+								<option value="Serving">Serving</option>
+								<option value="Available">Available</option>
+								<option value="Busy">Busy</option>
+								<option value="On break">On break</option>
+								<option value="Closed">Closed</option>
+							</select>
+						</div>
+
+						<div class="control-row">
+							<div class="control-label">
+								Serving number
+								<span class="control-detail">Clear the ticket at this window</span>
+							</div>
+							<button class="outline-btn clear-serving-btn" id="clearServingBtn" type="button">
+								Clear number
+							</button>
+						</div>
+					</section>
+
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<div class="toast" id="toast" role="status"></div>
+	<script src="scripts/accounts.js"></script>
+	<script src="scripts/queue-data.js"></script>
+	<script src="scripts/wait-time.js"></script>
+	<script src="scripts/login.js"></script>
+	<script src="scripts/app.js"></script>
+</body>
+</html>

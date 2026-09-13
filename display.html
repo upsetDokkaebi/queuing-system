@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Lineflow public queue display">
+	<title>Lineflow | Public Queue Display</title>
+	<link rel="stylesheet" href="styles/display.css">
+    <script src="https://kit.fontawesome.com/e2feaaed72.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="display-shell">
+		<header class="display-header">
+			<div class="brand">
+				<span class="brand-mark">↗</span>
+				<div>
+					<strong>lineflow</strong>
+					<span>Northstar Clinic</span>
+				</div>
+			</div>
+
+			<div class="service-title">
+				<h1>Please wait for your number</h1>
+				<p>Mangyaring hintayin ang iyong numero na tawagin.</p>
+			</div>
+
+			<div class="clock">
+				<span id="clockTime">--:--</span>
+				<small id="clockDate">--</small>
+			</div>
+		</header>
+
+		<main>
+			<section
+				class="window-grid"
+				aria-label="Service windows"
+				id="windowGrid"
+			></section>
+
+			<section class="queue-preview">
+				<div class="section-heading">
+					<div>
+						<span class="eyebrow">Up next</span>
+						<h2>Next in line</h2>
+					</div>
+					<span class="waiting-count" id="waitingCount">08 waiting</span>
+				</div>
+
+				<div class="ticket-list" id="ticketList"></div>
+			</section>
+		</main>
+
+		<footer class="display-footer">
+			<span>Service hours · Monday–Friday · 8:00 AM–5:00 PM</span>
+			<span>
+				<i class="status-light"></i>
+				<span id="syncStatus">Live display</span>
+			</span>
+		</footer>
+	</div>
+
+	<script src="scripts/queue-data.js"></script>
+	<script src="scripts/display.js"></script>
+</body>
+</html>
