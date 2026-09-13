@@ -1,4 +1,5 @@
 # Lineflow Queue System
+![Queuing preview](assets/queuing-preview.png)
 
 Lineflow is a browser-based queue management prototype for Northstar Clinic. It provides a staff dashboard, a visitor registration flow, and a public queue display that share queue updates in the browser.
 
